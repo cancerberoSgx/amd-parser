@@ -1,0 +1,20 @@
+{
+  "parsed": [
+    {
+      "name": "a",
+      "dependencies": [
+        "b"
+      ],
+      "callbackArguments": [],
+      "body": ""
+    },
+    {
+      "name": "main",
+      "dependencies": [
+        "a"
+      ],
+      "callbackArguments": [],
+      "body": ""
+    }
+  ]
+}
