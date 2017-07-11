@@ -43,7 +43,8 @@ function parse(str, defaultModuleName){
 	// console.log(callbackExpr)
 	var callbackArguments = callbackExpr.params.map((p)=>p.name) // TODO
 
-	var body = str.substring(callbackExpr.range[0], callbackExpr.range[1])
+	var bodyNode = callbackExpr.body
+	var body = str.substring(bodyNode.range[0], bodyNode.range[1])
 	
 
 	var parsed = {name, dependencies, callbackArguments, body}
