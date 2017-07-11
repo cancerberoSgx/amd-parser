@@ -3,11 +3,8 @@
 var args = require('yargs').argv
 var glob = require('glob').sync
 var fs = require('fs')
+var plugins = require('./plugins')
 
-var config = {
-	input: args.input, 
-	output: args.output
-}
 
 var addFile = require('./document').addFile
 var newDocument = require('./document').newDocument
@@ -16,13 +13,26 @@ var printDocument = require('./document').printDocument
 function main(config) {
 
 	checkUsage()
+	plugins.init()
+
 	var document = newDocument()
 	glob(config.input).map((f)=>{
 		var content = fs.readFileSync(f).toString()
 		addFile(document, f, content)
 	})
 
-	if(args.output){
+	// metadata is generated ! 
+	// now we just delegates responsibility to a plugin or if no plugin then just write metadata somewhere
+
+	if(config.plugin){ 
+		var plugin = plugins.getPlugin(config.plugin)
+		if(!plugin){
+			console.log('plugin done exists: ', config.plugin, 'exiting.')
+			process.exit(1)
+		}
+		plugin.execute(document)
+	}
+	else if(args.output){ //no plugin means print all metadata from source .js files 
 		fs.writeFileSync(args.output, printDocument(document))
 	}
 	else {
@@ -53,5 +63,11 @@ Generate a amd bundle file from metadata from 'AddressModel' entry point (not im
 	}
 }
 
+
+var config = {
+	input: args.input, 
+	output: args.output,
+	plugin: args.plugin
+}
 // MAIN CALL !
 main(config)  // !

@@ -4,6 +4,7 @@
 var parse = require('./parse').parse
 function addFile(document, fileName, fileContents){
 	var parsed = parse(fileContents, fileName)
+	parsed.fileName = fileName
 	document.parsed = document.parsed || []
 	document.parsed.push(parsed)
 }

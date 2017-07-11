@@ -8,7 +8,8 @@
       "callbackArguments": [
         "b"
       ],
-      "body": "function(b){\r\n\treturn 'a + '+b\r\n}"
+      "body": "{\r\n\treturn 'a + '+b\r\n}",
+      "fileName": "test-files/project1/a.js"
     },
     {
       "name": "main",
@@ -18,7 +19,8 @@
       "callbackArguments": [
         "a"
       ],
-      "body": "function(a){\r\n\tconsole.log(a)\r\n}"
+      "body": "{\r\n\tconsole.log(a)\r\n}",
+      "fileName": "test-files/project1/main.js"
     }
   ]
 }

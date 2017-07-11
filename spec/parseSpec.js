@@ -12,6 +12,7 @@ define('foo', ['dep1'], function(dep1){
 		var parsed = parse(js)
 		expect(parsed.name).toBe('foo')
 		expect(parsed.dependencies[0]).toBe('dep1')
-		console.log(JSON.stringify(parsed, 0, 2))
+		expect(parsed.body.indexOf('return \'foo\'')!=-1).toBe(true)
+		// console.log(JSON.stringify(parsed, 0, 2))
 	})
 })
