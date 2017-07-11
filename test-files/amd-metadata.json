@@ -5,16 +5,20 @@
       "dependencies": [
         "b"
       ],
-      "callbackArguments": [],
-      "body": ""
+      "callbackArguments": [
+        "b"
+      ],
+      "body": "function(b){\r\n\treturn 'a + '+b\r\n}"
     },
     {
       "name": "main",
       "dependencies": [
         "a"
       ],
-      "callbackArguments": [],
-      "body": ""
+      "callbackArguments": [
+        "a"
+      ],
+      "body": "function(a){\r\n\tconsole.log(a)\r\n}"
     }
   ]
 }

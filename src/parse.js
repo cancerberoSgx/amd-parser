@@ -3,8 +3,14 @@ var assert = require('assert')
 
 // if no name is given in the define() declaration we will use given defaultModuleName and if none we will generate a random one.
 function parse(str, defaultModuleName){
-	var ast = esprima.parse(str)
+	var esprimaConfig = {
+		raw: true,
+		range: true,	
+		comment: true		
+	}
+	var ast = esprima.parse(str, esprimaConfig)
 	var defineExpr = findDefineExpression(ast)
+	// console.log(JSON.stringify(defineExpr,0,2))
 	var defineHasName = defineExpr.expression.arguments[0].type=='Literal'
 
 	var name
@@ -26,9 +32,19 @@ function parse(str, defaultModuleName){
 
 	dependencies = depsArg.elements.map((e)=>e.value)
 
-	var callbackArguments = [] // TODO
+	var callbackExpr
+	if(defineHasName){
+		callbackExpr = defineExpr.expression.arguments[2]
+	}
+	else{
+		callbackExpr = defineExpr.expression.arguments[1]
+	}
 
-	var body = ''// TODO
+	// console.log(callbackExpr)
+	var callbackArguments = callbackExpr.params.map((p)=>p.name) // TODO
+
+	var body = str.substring(callbackExpr.range[0], callbackExpr.range[1])
+	
 
 	var parsed = {name, dependencies, callbackArguments, body}
 	return parsed
@@ -42,3 +58,4 @@ function findDefineExpression(ast){
 	)
 }
 module.exports = {parse}
+
